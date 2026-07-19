@@ -1,20 +1,20 @@
---------------------------------------
---INSERTAR DATOS 
---------------------------------------
---Sucursales(3 regisgros)
+-- ------------------------------------
+-- INSERTAR DATOS (MySQL)
+-- ------------------------------------
+-- Sucursales(3 regisgros)
 INSERT INTO sucursales (id_sucursal, nombre_sucursal, direccion_sucursal) VALUES
 (1, 'Sucursal Centro Histórico', 'García Moreno N3-45, Quito'),
 (2, 'Sucursal Norte', 'Av. 6 de Diciembre N45-12, Quito'),
 (3, 'Sucursal Sur', 'Av. Maldonado S15-30, Quito');
 
---Categorias (4 registros)
+-- Categorias (4 registros)
 INSERT INTO categorias (id_categoria, nombre_categoria, descripcion) VALUES
 (1, 'Casual', 'Prendas de uso diario'),
 (2, 'Formal', 'Prendas para oficina o eventos'),
 (3, 'Deportiva', 'Ropa deportiva y cómoda'),
 (4, 'Invierno', 'Prendas abrigadas');
 
---Tallas (6 registros)
+-- Tallas (6 registros)
 INSERT INTO tallas (id_talla, nombre_talla) VALUES
 (1, 'XS'),
 (2, 'S'),
@@ -23,7 +23,7 @@ INSERT INTO tallas (id_talla, nombre_talla) VALUES
 (5, 'XL'),
 (6, 'XXL');
 
---Proveedores (10 registros)
+-- Proveedores (10 registros)
 INSERT INTO proveedores (id_proveedor, nombre_proveedor) VALUES
 (1, 'Confecciones Quito'),
 (2, 'Distribuidora Textil del Valle'),
@@ -36,15 +36,15 @@ INSERT INTO proveedores (id_proveedor, nombre_proveedor) VALUES
 (9, 'Distribuidora Textil San Rafael'),
 (10, 'Distribuidora de Ropa del Pacífico');
 
---Metodos_Pago (3 registros)
+-- Metodos_Pago (3 registros)
 INSERT INTO metodos_pago (id_pago, metodo_pago) VALUES
 (1, 'Efectivo'),
 (2, 'Transferencia'),
 (3, 'Tarjeta de crédito');
 
---Clientes (31 registros)
+-- Clientes (31 registros)
 INSERT INTO clientes (id_cliente, nombre_cliente, cedula_cliente, telefono_cliente, correo_cliente) VALUES
-(0, 'Consumidor Final', '9999999999', 'N/A', 'N/A'),
+(999, 'Consumidor Final', '9999999999', 'N/A', 'N/A'),
 (1, 'Miguel Molina', '1853276481', '0935030564', 'miguel.molina@hotmail.com'),
 (2, 'Yolanda Sánchez', '0757672423', '0938849696', 'yolanda.sanchez@outlook.com'),
 (3, 'Verónica Ramírez', '1731012264', '0991669784', 'veronica.ramirez@hotmail.com'),
@@ -76,7 +76,7 @@ INSERT INTO clientes (id_cliente, nombre_cliente, cedula_cliente, telefono_clien
 (29, 'Andrea Ortiz', '1950967057', '0946688937', 'andrea.ortiz@yahoo.com'),
 (30, 'Daniela Torres', '1606562724', '0998069901', 'daniela.torres@yahoo.com');
 
---Empleados (20 registros)
+-- Empleados (20 registros)
 INSERT INTO empleados (id_empleado, nombre_empleado, rol_empleado, id_sucursal) VALUES
 (1, 'Santiago González', 'Vendedor', 3),
 (2, 'Valentina Ramírez', 'Vendedor', 1),
@@ -98,7 +98,7 @@ INSERT INTO empleados (id_empleado, nombre_empleado, rol_empleado, id_sucursal) 
 (19, 'Verónica Castro', 'Administrador', NULL),
 (20, 'Mateo Torres', 'Auditor', NULL);
 
---Promociones (10 registros)
+-- Promociones (10 registros)
 INSERT INTO promociones (id_promocion, descripcion_promocion, porcentaje_descuento) VALUES
 (1, 'Descuento temporada', 10),
 (2, 'Liquidación fin de mes', 30),
@@ -111,7 +111,7 @@ INSERT INTO promociones (id_promocion, descripcion_promocion, porcentaje_descuen
 (9, '2x1 en camisetas', 15),
 (10, 'Descuento por fidelidad', 25);
 
---Productos (20 registros)
+-- Productos (20 registros)
 INSERT INTO productos (id_producto, nombre_producto, id_talla, color, precio_unitario, id_proveedor, stock_disponible, id_categoria) VALUES
 (1, 'Camiseta', 6, 'Negro', 51.98, 4, 27, 1),
 (2, 'Pantalón', 1, 'Gris', 17.68, 3, 45, 1),
@@ -134,7 +134,7 @@ INSERT INTO productos (id_producto, nombre_producto, id_talla, color, precio_uni
 (19, 'Camisa', 2, 'Rojo', 21.08, 5, 36, 2),
 (20, 'Buzo', 3, 'Gris', 48.96, 5, 50, 3);
 
---Ventas (100 registros)
+-- Ventas (100 registros)
 INSERT INTO ventas (id_venta, fecha_venta, id_sucursal, id_pago, id_cliente, id_vendedor, id_cajero, id_promocion) VALUES
 (1, '2026-02-23', 3, 3, 26, 1, 11, 7),
 (2, '2025-07-15', 3, 1, 19, 6, 14, NULL),
@@ -149,10 +149,10 @@ INSERT INTO ventas (id_venta, fecha_venta, id_sucursal, id_pago, id_cliente, id_
 (11, '2025-09-23', 1, 1, 10, 2, 12, 7),
 (12, '2026-01-05', 3, 3, 8, 9, 14, NULL),
 (13, '2025-07-15', 2, 2, 14, 5, 15, NULL),
-(14, '2025-09-16', 3, 3, 0, 4, 12, 2),
+(14, '2025-09-16', 3, 3, 999, 4, 12, 2),
 (15, '2026-02-27', 1, 1, 3, 3, 11, NULL),
 (16, '2026-01-20', 3, 3, 2, 4, 13, NULL),
-(17, '2025-09-24', 3, 2, 0, 4, 13, NULL),
+(17, '2025-09-24', 3, 2, 999, 4, 13, NULL),
 (18, '2026-02-05', 3, 3, 30, 4, 14, 4),
 (19, '2026-04-26', 3, 1, 27, 3, 11, 5),
 (20, '2025-07-08', 3, 3, 30, 5, 14, 5),
@@ -193,8 +193,8 @@ INSERT INTO ventas (id_venta, fecha_venta, id_sucursal, id_pago, id_cliente, id_
 (55, '2026-02-26', 1, 3, 1, 10, 11, NULL),
 (56, '2026-02-12', 3, 2, 29, 5, 12, NULL),
 (57, '2025-09-06', 2, 1, 20, 5, 12, NULL),
-(58, '2026-03-28', 3, 3, 0, 8, 11, NULL),
-(59, '2025-09-03', 3, 1, 0, 5, 13, NULL),
+(58, '2026-03-28', 3, 3, 999, 8, 11, NULL),
+(59, '2025-09-03', 3, 1, 999, 5, 13, NULL),
 (60, '2025-11-21', 1, 1, 18, 6, 15, NULL),
 (61, '2026-07-01', 2, 1, 27, 8, 13, NULL),
 (62, '2026-02-23', 2, 1, 3, 3, 12, NULL),
@@ -203,30 +203,30 @@ INSERT INTO ventas (id_venta, fecha_venta, id_sucursal, id_pago, id_cliente, id_
 (65, '2026-05-08', 3, 2, 8, 8, 11, NULL),
 (66, '2026-04-14', 3, 2, 8, 2, 14, NULL),
 (67, '2025-09-27', 2, 3, 5, 1, 11, NULL),
-(68, '2025-07-17', 2, 1, 0, 9, 12, NULL),
+(68, '2025-07-17', 2, 1, 999, 9, 12, NULL),
 (69, '2025-10-28', 2, 3, 23, 9, 14, NULL),
 (70, '2025-10-11', 3, 1, 21, 2, 14, NULL),
 (71, '2025-09-20', 2, 1, 7, 8, 14, NULL),
 (72, '2026-06-14', 2, 1, 12, 9, 13, 5),
 (73, '2026-05-20', 1, 1, 27, 8, 11, NULL),
 (74, '2025-10-28', 3, 3, 1, 1, 13, 3),
-(75, '2026-03-01', 3, 1, 0, 9, 12, NULL),
+(75, '2026-03-01', 3, 1, 999, 9, 12, NULL),
 (76, '2025-11-27', 1, 2, 26, 10, 11, 3),
 (77, '2026-06-03', 1, 3, 6, 2, 11, 6),
 (78, '2025-12-20', 1, 3, 6, 5, 11, 7),
 (79, '2025-10-10', 3, 1, 16, 8, 13, NULL),
 (80, '2025-10-03', 1, 2, 20, 1, 15, NULL),
-(81, '2026-01-26', 3, 1, 0, 8, 14, NULL),
+(81, '2026-01-26', 3, 1, 999, 8, 14, NULL),
 (82, '2025-10-09', 1, 2, 15, 2, 11, NULL),
 (83, '2026-02-03', 1, 1, 20, 10, 15, NULL),
 (84, '2026-05-28', 2, 3, 15, 9, 15, NULL),
 (85, '2025-11-28', 3, 1, 21, 9, 12, NULL),
 (86, '2025-09-23', 1, 2, 15, 7, 14, NULL),
 (87, '2026-07-04', 2, 2, 9, 6, 12, NULL),
-(88, '2026-01-07', 2, 1, 0, 2, 11, NULL),
+(88, '2026-01-07', 2, 1, 999, 2, 11, NULL),
 (89, '2025-08-08', 3, 3, 5, 9, 11, NULL),
 (90, '2025-07-23', 3, 3, 4, 7, 13, NULL),
-(91, '2025-08-14', 2, 3, 0, 5, 15, NULL),
+(91, '2025-08-14', 2, 3, 999, 5, 15, NULL),
 (92, '2026-02-19', 1, 3, 5, 8, 12, NULL),
 (93, '2026-04-20', 2, 3, 25, 5, 15, 7),
 (94, '2025-12-06', 3, 3, 21, 9, 11, NULL),
@@ -237,8 +237,8 @@ INSERT INTO ventas (id_venta, fecha_venta, id_sucursal, id_pago, id_cliente, id_
 (99, '2026-06-24', 1, 1, 2, 2, 13, NULL),
 (100, '2026-05-15', 2, 2, 14, 5, 12, NULL);
 
---Detalle Venta (167 registros)
-INSERT INTO detalleventa (id_venta, id_producto, cantidad_vendida, precio_unitario, subtotal) VALUES
+-- Detalle Venta (167 registros)
+INSERT INTO detalle_venta (id_venta, id_producto, cantidad_vendida, precio_unitario, subtotal) VALUES
 (1, 14, 1, 38.73, 38.73),
 (2, 19, 2, 21.08, 42.16),
 (3, 10, 1, 11.33, 11.33),
@@ -407,110 +407,109 @@ INSERT INTO detalleventa (id_venta, id_producto, cantidad_vendida, precio_unitar
 (99, 6, 1, 10.45, 10.45),
 (100, 20, 3, 48.96, 146.88);
 
--- Facturas (100 registros)
-INSERT INTO facturas (id_factura, numero_factura, id_venta, impuesto, total_factura, monto_pagado) VALUES
-(1001, 'FAC-001001', 1, 5.81, 44.54, 44.54),
-(1002, 'FAC-001002', 2, 6.32, 48.48, 48.48),
-(1003, 'FAC-001003', 3, 7, 53.69, 53.69),
-(1004, 'FAC-001004', 4, 17.84, 136.78, 136.78),
-(1005, 'FAC-001005', 5, 3.64, 27.89, 27.89),
-(1006, 'FAC-001006', 6, 5.81, 44.54, 44.54),
-(1007, 'FAC-001007', 7, 12.67, 97.15, 97.15),
-(1008, 'FAC-001008', 8, 12.67, 97.15, 97.15),
-(1009, 'FAC-001009', 9, 23.79, 182.41, 182.41),
-(1010, 'FAC-001010', 10, 5.48, 42.03, 42.03),
-(1011, 'FAC-001011', 11, 37.47, 287.3, 287.3),
-(1012, 'FAC-001012', 12, 5.28, 40.48, 40.48),
-(1013, 'FAC-001013', 13, 18.07, 138.55, 138.55),
-(1014, 'FAC-001014', 14, 6.32, 48.48, 48.48),
-(1015, 'FAC-001015', 15, 19.24, 147.5, 147.5),
-(1016, 'FAC-001016', 16, 1.57, 12.02, 12.02),
-(1017, 'FAC-001017', 17, 31.48, 241.35, 241.35),
-(1018, 'FAC-001018', 18, 20.37, 156.2, 156.2),
-(1019, 'FAC-001019', 19, 4.7, 36.05, 36.05),
-(1020, 'FAC-001020', 20, 6.17, 47.31, 47.31),
-(1021, 'FAC-001021', 21, 51.83, 397.34, 397.34),
-(1022, 'FAC-001022', 22, 25.91, 198.63, 198.63),
-(1023, 'FAC-001023', 23, 12.34, 94.62, 94.62),
-(1024, 'FAC-001024', 24, 3.4, 26.06, 26.06),
-(1025, 'FAC-001025', 25, 21.07, 161.54, 161.54),
-(1026, 'FAC-001026', 26, 2.65, 20.33, 20.33),
-(1027, 'FAC-001027', 27, 1.7, 13.03, 13.03),
-(1028, 'FAC-001028', 28, 27.87, 213.69, 213.69),
-(1029, 'FAC-001029', 29, 24.4, 187.09, 187.09),
-(1030, 'FAC-001030', 30, 14.69, 112.61, 112.61),
-(1031, 'FAC-001031', 31, 13.62, 104.4, 104.4),
-(1032, 'FAC-001032', 32, 18.64, 142.9, 142.9),
-(1033, 'FAC-001033', 33, 16.45, 126.1, 126.1),
-(1034, 'FAC-001034', 34, 14.21, 108.97, 108.97),
-(1035, 'FAC-001035', 35, 5.81, 44.57, 44.57),
-(1036, 'FAC-001036', 36, 10.05, 77.03, 77.03),
-(1037, 'FAC-001037', 37, 15.66, 120.05, 120.05),
-(1038, 'FAC-001038', 38, 35.63, 273.17, 273.17),
-(1039, 'FAC-001039', 39, 11.08, 84.94, 84.94),
-(1040, 'FAC-001040', 40, 45.38, 347.88, 347.88),
-(1041, 'FAC-001041', 41, 28.29, 216.87, 216.87),
-(1042, 'FAC-001042', 42, 41.81, 320.54, 320.54),
-(1043, 'FAC-001043', 43, 5.54, 42.47, 42.47),
-(1044, 'FAC-001044', 44, 1.57, 12.02, 12.02),
-(1045, 'FAC-001045', 45, 8.63, 66.17, 66.17),
-(1046, 'FAC-001046', 46, 7.49, 57.43, 57.43),
-(1047, 'FAC-001047', 47, 23.71, 181.81, 181.81),
-(1048, 'FAC-001048', 48, 28.6, 219.27, 219.27),
-(1049, 'FAC-001049', 49, 20.11, 154.21, 154.21),
-(1050, 'FAC-001050', 50, 25.17, 192.95, 192.95),
-(1051, 'FAC-001051', 51, 16.62, 127.41, 127.41),
-(1052, 'FAC-001052', 52, 19.85, 152.16, 152.16),
-(1053, 'FAC-001053', 53, 16.9, 129.56, 129.56),
-(1054, 'FAC-001054', 54, 51.19, 392.47, 392.47),
-(1055, 'FAC-001055', 55, 3.4, 26.06, 26.06),
-(1056, 'FAC-001056', 56, 10.51, 80.59, 80.59),
-(1057, 'FAC-001057', 57, 3.93, 30.11, 30.11),
-(1058, 'FAC-001058', 58, 18.21, 139.62, 139.62),
-(1059, 'FAC-001059', 59, 9.6, 73.63, 73.63),
-(1060, 'FAC-001060', 60, 7.77, 59.54, 59.54),
-(1061, 'FAC-001061', 61, 29.24, 224.18, 224.18),
-(1062, 'FAC-001062', 62, 28.01, 214.76, 214.76),
-(1063, 'FAC-001063', 63, 12.34, 94.62, 94.62),
-(1064, 'FAC-001064', 64, 1.94, 14.86, 14.86),
-(1065, 'FAC-001065', 65, 9.43, 72.29, 72.29),
-(1066, 'FAC-001066', 66, 25.89, 198.51, 198.51),
-(1067, 'FAC-001067', 67, 31.38, 240.55, 240.55),
-(1068, 'FAC-001068', 68, 33.8, 259.12, 259.12),
-(1069, 'FAC-001069', 69, 19.52, 149.68, 149.68),
-(1070, 'FAC-001070', 70, 2.65, 20.33, 20.33),
-(1071, 'FAC-001071', 71, 14.69, 112.61, 112.61),
-(1072, 'FAC-001072', 72, 25.89, 198.51, 198.51),
-(1073, 'FAC-001073', 73, 17.25, 132.26, 132.26),
-(1074, 'FAC-001074', 74, 5.81, 44.54, 44.54),
-(1075, 'FAC-001075', 75, 20.06, 153.8, 153.8),
-(1076, 'FAC-001076', 76, 20.11, 154.16, 154.16),
-(1077, 'FAC-001077', 77, 26.76, 205.17, 205.17),
-(1078, 'FAC-001078', 78, 26.68, 204.57, 204.57),
-(1079, 'FAC-001079', 79, 12.34, 94.62, 94.62),
-(1080, 'FAC-001080', 80, 23.71, 181.81, 181.81),
-(1081, 'FAC-001081', 81, 16.92, 129.72, 129.72),
-(1082, 'FAC-001082', 82, 15.67, 120.12, 120.12),
-(1083, 'FAC-001083', 83, 34.81, 266.91, 266.91),
-(1084, 'FAC-001084', 84, 4.74, 36.34, 36.34),
-(1085, 'FAC-001085', 85, 11.12, 85.24, 85.24),
-(1086, 'FAC-001086', 86, 8.45, 64.77, 64.77),
-(1087, 'FAC-001087', 87, 9.48, 72.68, 72.68),
-(1088, 'FAC-001088', 88, 7.96, 61, 61),
-(1089, 'FAC-001089', 89, 15.81, 121.21, 121.21),
-(1090, 'FAC-001090', 90, 15.84, 121.44, 121.44),
-(1091, 'FAC-001091', 91, 10.56, 80.96, 80.96),
-(1092, 'FAC-001092', 92, 46.12, 353.59, 353.59),
-(1093, 'FAC-001093', 93, 24.32, 186.47, 186.47),
-(1094, 'FAC-001094', 94, 17.75, 136.07, 136.07),
-(1095, 'FAC-001095', 95, 21.55, 165.19, 165.19),
-(1096, 'FAC-001096', 96, 10.96, 84.06, 84.06),
-(1097, 'FAC-001097', 97, 16.62, 127.41, 127.41),
-(1098, 'FAC-001098', 98, 32.08, 245.94, 245.94),
-(1099, 'FAC-001099', 99, 1.57, 12.02, 12.02),
-(1100, 'FAC-001100', 100, 22.03, 168.91, 168.91);
+INSERT INTO facturas (id_factura, numero_factura, id_venta, descuento_aplicado, subtotal_neto, impuesto, total_factura, monto_pagado) VALUES
+(1001, 'FAC-001001', 1,  9.68,  29.05,  4.36,  33.41,  33.41),
+(1002, 'FAC-001002', 2,  0.00,  42.16,  6.32,  48.48,  48.48),
+(1003, 'FAC-001003', 3,  0.00,  46.69,  7.00,  53.69,  53.69),
+(1004, 'FAC-001004', 4,  17.84, 101.10, 15.16, 116.26, 116.26),
+(1005, 'FAC-001005', 5,  0.00,  24.25,  3.64,  27.89,  27.89),
+(1006, 'FAC-001006', 6,  5.81,  32.92,  4.94,  37.86,  37.86),
+(1007, 'FAC-001007', 7,  0.00,  84.48,  12.67, 97.15,  97.15),
+(1008, 'FAC-001008', 8,  0.00,  84.48,  12.67, 97.15,  97.15),
+(1009, 'FAC-001009', 9,  0.00,  158.62, 23.79, 182.41, 182.41),
+(1010, 'FAC-001010', 10, 3.65,  32.90,  4.93,  37.83,  37.83),
+(1011, 'FAC-001011', 11, 62.46, 187.37, 28.11, 215.48, 215.48),
+(1012, 'FAC-001012', 12, 0.00,  35.20,  5.28,  40.48,  40.48),
+(1013, 'FAC-001013', 13, 0.00,  120.48, 18.07, 138.55, 138.55),
+(1014, 'FAC-001014', 14, 12.65, 29.51,  4.43,  33.94,  33.94),
+(1015, 'FAC-001015', 15, 0.00,  128.26, 19.24, 147.50, 147.50),
+(1016, 'FAC-001016', 16, 0.00,  10.45,  1.57,  12.02,  12.02),
+(1017, 'FAC-001017', 17, 0.00,  209.87, 31.48, 241.35, 241.35),
+(1018, 'FAC-001018', 18, 13.58, 122.25, 18.34, 140.59, 140.59),
+(1019, 'FAC-001019', 19, 4.70,  26.65,  4.00,  30.65,  30.65),
+(1020, 'FAC-001020', 20, 6.17,  34.97,  5.25,  40.22,  40.22),
+(1021, 'FAC-001021', 21, 0.00,  345.51, 51.83, 397.34, 397.34),
+(1022, 'FAC-001022', 22, 51.82, 120.90, 18.14, 139.04, 139.04),
+(1023, 'FAC-001023', 23, 0.00,  82.28,  12.34, 94.62,  94.62),
+(1024, 'FAC-001024', 24, 0.00,  22.66,  3.40,  26.06,  26.06),
+(1025, 'FAC-001025', 25, 0.00,  140.47, 21.07, 161.54, 161.54),
+(1026, 'FAC-001026', 26, 0.00,  17.68,  2.65,  20.33,  20.33),
+(1027, 'FAC-001027', 27, 0.00,  11.33,  1.70,  13.03,  13.03),
+(1028, 'FAC-001028', 28, 0.00,  185.82, 27.87, 213.69, 213.69),
+(1029, 'FAC-001029', 29, 40.67, 122.02, 18.30, 140.32, 140.32),
+(1030, 'FAC-001030', 30, 14.69, 83.23,  12.48, 95.71,  95.71),
+(1031, 'FAC-001031', 31, 0.00,  90.78,  13.62, 104.40, 104.40),
+(1032, 'FAC-001032', 32, 0.00,  124.26, 18.64, 142.90, 142.90),
+(1033, 'FAC-001033', 33, 0.00,  109.65, 16.45, 126.10, 126.10),
+(1034, 'FAC-001034', 34, 0.00,  94.76,  14.21, 108.97, 108.97),
+(1035, 'FAC-001035', 35, 3.88,  34.88,  5.23,  40.11,  40.11),
+(1036, 'FAC-001036', 36, 0.00,  66.98,  10.05, 77.03,  77.03),
+(1037, 'FAC-001037', 37, 15.66, 88.73,  13.31, 102.04, 102.04),
+(1038, 'FAC-001038', 38, 0.00,  237.54, 35.63, 273.17, 273.17),
+(1039, 'FAC-001039', 39, 0.00,  73.86,  11.08, 84.94,  84.94),
+(1040, 'FAC-001040', 40, 90.75, 211.75, 31.76, 243.51, 243.51),
+(1041, 'FAC-001041', 41, 0.00,  188.58, 28.29, 216.87, 216.87),
+(1042, 'FAC-001042', 42, 83.62, 195.11, 29.27, 224.38, 224.38),
+(1043, 'FAC-001043', 43, 0.00,  36.93,  5.54,  42.47,  42.47),
+(1044, 'FAC-001044', 44, 0.00,  10.45,  1.57,  12.02,  12.02),
+(1045, 'FAC-001045', 45, 17.26, 40.28,  6.04,  46.32,  46.32),
+(1046, 'FAC-001046', 46, 0.00,  49.94,  7.49,  57.43,  57.43),
+(1047, 'FAC-001047', 47, 0.00,  158.10, 23.71, 181.81, 181.81),
+(1048, 'FAC-001048', 48, 0.00,  190.67, 28.60, 219.27, 219.27),
+(1049, 'FAC-001049', 49, 33.52, 100.58, 15.09, 115.67, 115.67),
+(1050, 'FAC-001050', 50, 25.17, 142.61, 21.39, 164.00, 164.00),
+(1051, 'FAC-001051', 51, 0.00,  110.79, 16.62, 127.41, 127.41),
+(1052, 'FAC-001052', 52, 0.00,  132.31, 19.85, 152.16, 152.16),
+(1053, 'FAC-001053', 53, 0.00,  112.66, 16.90, 129.56, 129.56),
+(1054, 'FAC-001054', 54, 51.19, 290.09, 43.51, 333.60, 333.60),
+(1055, 'FAC-001055', 55, 0.00,  22.66,  3.40,  26.06,  26.06),
+(1056, 'FAC-001056', 56, 0.00,  70.08,  10.51, 80.59,  80.59),
+(1057, 'FAC-001057', 57, 0.00,  26.18,  3.93,  30.11,  30.11),
+(1058, 'FAC-001058', 58, 0.00,  121.41, 18.21, 139.62, 139.62),
+(1059, 'FAC-001059', 59, 0.00,  64.03,  9.60,  73.63,  73.63),
+(1060, 'FAC-001060', 60, 0.00,  51.77,  7.77,  59.54,  59.54),
+(1061, 'FAC-001061', 61, 0.00,  194.94, 29.24, 224.18, 224.18),
+(1062, 'FAC-001062', 62, 0.00,  186.75, 28.01, 214.76, 214.76),
+(1063, 'FAC-001063', 63, 20.57, 61.71,  9.26,  70.97,  70.97),
+(1064, 'FAC-001064', 64, 0.00,  12.92,  1.94,  14.86,  14.86),
+(1065, 'FAC-001065', 65, 0.00,  62.86,  9.43,  72.29,  72.29),
+(1066, 'FAC-001066', 66, 0.00,  172.62, 25.89, 198.51, 198.51),
+(1067, 'FAC-001067', 67, 0.00,  209.17, 31.38, 240.55, 240.55),
+(1068, 'FAC-001068', 68, 0.00,  225.32, 33.80, 259.12, 259.12),
+(1069, 'FAC-001069', 69, 0.00,  130.16, 19.52, 149.68, 149.68),
+(1070, 'FAC-001070', 70, 0.00,  17.68,  2.65,  20.33,  20.33),
+(1071, 'FAC-001071', 71, 0.00,  97.92,  14.69, 112.61, 112.61),
+(1072, 'FAC-001072', 72, 25.89, 146.73, 22.01, 168.74, 168.74),
+(1073, 'FAC-001073', 73, 0.00,  115.01, 17.25, 132.26, 132.26),
+(1074, 'FAC-001074', 74, 5.81,  32.92,  4.94,  37.86,  37.86),
+(1075, 'FAC-001075', 75, 0.00,  133.74, 20.06, 153.80, 153.80),
+(1076, 'FAC-001076', 76, 20.11, 113.94, 17.09, 131.03, 131.03),
+(1077, 'FAC-001077', 77, 44.60, 133.81, 20.07, 153.88, 153.88),
+(1078, 'FAC-001078', 78, 44.47, 133.42, 20.01, 153.43, 153.43),
+(1079, 'FAC-001079', 79, 0.00,  82.28,  12.34, 94.62,  94.62),
+(1080, 'FAC-001080', 80, 0.00,  158.10, 23.71, 181.81, 181.81),
+(1081, 'FAC-001081', 81, 0.00,  112.80, 16.92, 129.72, 129.72),
+(1082, 'FAC-001082', 82, 0.00,  104.45, 15.67, 120.12, 120.12),
+(1083, 'FAC-001083', 83, 0.00,  232.10, 34.81, 266.91, 266.91),
+(1084, 'FAC-001084', 84, 0.00,  31.60,  4.74,  36.34,  36.34),
+(1085, 'FAC-001085', 85, 0.00,  74.12,  11.12, 85.24,  85.24),
+(1086, 'FAC-001086', 86, 0.00,  56.32,  8.45,  64.77,  64.77),
+(1087, 'FAC-001087', 87, 0.00,  63.20,  9.48,  72.68,  72.68),
+(1088, 'FAC-001088', 88, 0.00,  53.04,  7.96,  61.00,  61.00),
+(1089, 'FAC-001089', 89, 0.00,  105.40, 15.81, 121.21, 121.21),
+(1090, 'FAC-001090', 90, 0.00,  105.60, 15.84, 121.44, 121.44),
+(1091, 'FAC-001091', 91, 0.00,  70.40,  10.56, 80.96,  80.96),
+(1092, 'FAC-001092', 92, 0.00,  307.47, 46.12, 353.59, 353.59),
+(1093, 'FAC-001093', 93, 40.54, 121.61, 18.24, 139.85, 139.85),
+(1094, 'FAC-001094', 94, 0.00,  118.32, 17.75, 136.07, 136.07),
+(1095, 'FAC-001095', 95, 0.00,  143.64, 21.55, 165.19, 165.19),
+(1096, 'FAC-001096', 96, 7.31,  65.79,  9.87,  75.66,  75.66),
+(1097, 'FAC-001097', 97, 0.00,  110.79, 16.62, 127.41, 127.41),
+(1098, 'FAC-001098', 98, 21.39, 192.47, 28.87, 221.34, 221.34),
+(1099, 'FAC-001099', 99, 0.00,  10.45,  1.57,  12.02,  12.02),
+(1100, 'FAC-001100', 100, 0.00, 146.88, 22.03, 168.91, 168.91);
 
---Devoluciones (25 registros)
+-- Devoluciones (25 registros)
 INSERT INTO devoluciones (id_devoluciones, id_venta, id_producto, fecha_devolucion, cantidad_devuelta, motivo, monto_reembolso) VALUES
 (1, 22, 20, '2026-03-29', 1, 'Producto defectuoso', 48.96),
 (2, 58, 12, '2026-04-05', 1, 'Color no esperado', 36.93),
@@ -538,7 +537,7 @@ INSERT INTO devoluciones (id_devoluciones, id_venta, id_producto, fecha_devoluci
 (24, 1, 14, '2026-03-02', 1, 'Cambio de decisión', 38.73),
 (25, 2, 19, '2025-07-27', 2, 'Color no esperado', 42.16);
 
---Movimientos Inventarios (45 registros)
+-- Movimientos Inventarios (45 registros)
 INSERT INTO movimientos_inventario (id_movimiento, id_producto, id_sucursal, tipo_movimiento, cantidad, fecha_movimiento, motivo) VALUES
 (1, 1, 2, 'Entrada', 27, '2025-07-07', 'Carga inicial de inventario'),
 (2, 2, 1, 'Entrada', 45, '2025-11-01', 'Carga inicial de inventario'),
@@ -586,7 +585,7 @@ INSERT INTO movimientos_inventario (id_movimiento, id_producto, id_sucursal, tip
 (44, 20, 3, 'Entrada', 2, '2026-02-12', 'Devolución de cliente'),
 (45, 13, 1, 'Entrada', 1, '2026-02-26', 'Devolución de cliente');
 
---Auditorias (25 registros)
+-- Auditorias (25 registros)
 INSERT INTO auditoria (id_auditoria, tabla_afectada, id_registro_afectado, accion, id_empleado, fecha_hora) VALUES
 (1, 'Clientes', 2, 'INSERT', 19, '2026-04-09 17:59:17'),
 (2, 'Clientes', 11, 'UPDATE', 19, '2026-01-18 17:07:07'),
@@ -613,20 +612,18 @@ INSERT INTO auditoria (id_auditoria, tabla_afectada, id_registro_afectado, accio
 (24, 'Clientes', 21, 'UPDATE', 19, '2026-05-19 16:05:46'),
 (25, 'Clientes', 25, 'UPDATE', 19, '2025-12-07 11:56:02');
 
-
--- Reiniciar secuencias
-
-SELECT setval('sucursales_id_sucursal_seq', (SELECT MAX(id_sucursal) FROM sucursales));
-SELECT setval('categorias_id_categoria_seq', (SELECT MAX(id_categoria) FROM categorias));
-SELECT setval('tallas_id_talla_seq', (SELECT MAX(id_talla) FROM tallas));
-SELECT setval('proveedores_id_proveedor_seq', (SELECT MAX(id_proveedor) FROM proveedores));
-SELECT setval('metodos_pago_id_pago_seq', (SELECT MAX(id_pago) FROM metodos_pago));
-SELECT setval('clientes_id_cliente_seq', (SELECT MAX(id_cliente) FROM clientes));
-SELECT setval('promociones_id_promocion_seq', (SELECT MAX(id_promocion) FROM promociones));
-SELECT setval('empleados_id_empleado_seq', (SELECT MAX(id_empleado) FROM empleados));
-SELECT setval('productos_id_producto_seq', (SELECT MAX(id_producto) FROM productos));
-SELECT setval('ventas_id_venta_seq', (SELECT MAX(id_venta) FROM ventas));
-SELECT setval('facturas_id_factura_seq', (SELECT MAX(id_factura) FROM facturas));
-SELECT setval('devoluciones_id_devoluciones_seq', (SELECT MAX(id_devoluciones) FROM devoluciones));
-SELECT setval('movimientos_inventario_id_movimiento_seq', (SELECT MAX(id_movimiento) FROM movimientos_inventario));
-SELECT setval('auditoria_id_auditoria_seq', (SELECT MAX(id_auditoria) FROM auditoria));
+-- Ajustar los AUTO_INCREMENT para que sigan despues del ultimo ID insertado manualmente
+ALTER TABLE sucursales AUTO_INCREMENT = 4;
+ALTER TABLE categorias AUTO_INCREMENT = 5;
+ALTER TABLE tallas AUTO_INCREMENT = 7;
+ALTER TABLE proveedores AUTO_INCREMENT = 11;
+ALTER TABLE metodos_pago AUTO_INCREMENT = 4;
+ALTER TABLE clientes AUTO_INCREMENT = 1000;
+ALTER TABLE promociones AUTO_INCREMENT = 11;
+ALTER TABLE empleados AUTO_INCREMENT = 21;
+ALTER TABLE productos AUTO_INCREMENT = 21;
+ALTER TABLE ventas AUTO_INCREMENT = 101;
+ALTER TABLE facturas AUTO_INCREMENT = 1101;
+ALTER TABLE devoluciones AUTO_INCREMENT = 26;
+ALTER TABLE movimientos_inventario AUTO_INCREMENT = 46;
+ALTER TABLE auditoria AUTO_INCREMENT = 26;
