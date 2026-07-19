@@ -1,116 +1,180 @@
----------------
---Funciones
----------------
---1. Calcular IVA
-CREATE OR REPLACE FUNCTION fn_calcular_iva(monto NUMERIC)
-RETURNS NUMERIC 
-AS $$
-BEGIN
-	RETURN ROUND(monto * 0.15, 2);
-END;
-$$ LANGUAGE plpgsql;
+-- ----------------
+-- CONSULTAS SQL 
+-- ----------------
+-- 1. Listado de clientes
+SELECT id_cliente, nombre_cliente, cedula_cliente, telefono_cliente, correo_cliente
+FROM clientes;
 
-SELECT fn_calcular_iva(100);
+-- 2. Productos disponibles
+SELECT  p.id_producto,p.nombre_producto,c.nombre_categoria AS tipo_producto,
+		p.precio_unitario,p.stock_disponible
+FROM productos p
+JOIN categorias c ON p.id_categoria = c.id_categoria
+WHERE p.stock_disponible > 0;
 
---2.Calcular descuento
---VERSION 1. descuento directo por porcentaje
-CREATE OR REPLACE FUNCTION fn_calcular_descuento(monto NUMERIC, porcentaje NUMERIC)
-RETURNS NUMERIC 
-AS $$
-BEGIN
-	RETURN ROUND (monto *(porcentaje /100),2);
-END;
-$$ LANGUAGE plpgsql;
---VERSION 2. descuento segun una promocion existente
-CREATE OR REPLACE FUNCTION fn_calcular_descuento_promocion(monto NUMERIC,p_id_promocion INT)
-RETURNS NUMERIC 
-AS $$
-DECLARE v_porcentaje NUMERIC;
-BEGIN
-	SELECT porcentaje_descuento INTO v_porcentaje
-	FROM promociones
-	WHERE id_promocion=p_id_promocion;
-	IF v_porcentaje IS NULL THEN
-		RETURN 0;
-	END IF;
-	RETURN ROUND(monto*(v_porcentaje/100),2);
-END;
-$$ LANGUAGE plpgsql;
-	
-SELECT fn_calcular_descuento(100,1);
-SELECT fn_calcular_descuento_promocion(100,3);
+-- 3.Ventas por fecha
+SELECT  v.id_venta, v.fecha_venta,
+		cl.nombre_cliente AS cliente,
+		f.total_factura AS total_venta
+FROM ventas v
+JOIN clientes cl ON v.id_cliente=cl.id_cliente
+JOIN facturas f ON f.id_venta=v.id_venta
+ORDER BY v.fecha_venta;
 
---Calcular edad (Apartir de su fecha de nacimiento)
-CREATE OR REPLACE FUNCTION fn_calcular_edad(p_fecha_nacimiento DATE)
-RETURNS INT 
-AS $$
-BEGIN
-	IF p_fecha_nacimiento IS NULL THEN
-		RETURN NULL;
-	END IF;
-	RETURN EXTRACT(YEAR FROM AGE(CURRENT_DATE, p_fecha_nacimiento));
-END;
-$$ LANGUAGE plpgsql;
+-- 4. Proveedores registrados
+SELECT id_proveedor,nombre_proveedor
+FROM proveedores;
 
-SELECT nombre_cliente,fn_calcular_edad(fecha_nacimiento) AS edad FROM clientes ORDER BY id_cliente;
+-- 5.Empleados por rol
+SELECT id_empleado,nombre_empleado,rol_empleado
+FROM empleados
+ORDER BY rol_empleado;
 
---4. Calcular Comision 
-CREATE OR REPLACE FUNCTION fn_calcular_comision(p_id_empleado INT,p_porcentaje NUMERIC DEFAULT 5)
-RETURNS NUMERIC
-AS $$
-DECLARE v_total_vendido NUMERIC;
-BEGIN
-	SELECT SUM(f.total_factura) INTO v_total_vendido
-	FROM ventas v
-	JOIN facturas f ON f.id_venta=v.id_venta
-	WHERE v.id_vendedor=p_id_empleado;
+-- 6. Clientes con sus compras JOIN
+SELECT  cl.nombre_cliente AS cliente,
+		v.fecha_venta,
+		f.total_factura AS total_venta,
+		mp.metodo_pago AS tipo_venta
+FROM ventas v
+JOIN clientes cl ON v.id_cliente=cl.id_cliente
+JOIN facturas f ON f.id_venta=v.id_venta
+JOIN metodos_pago mp ON v.id_pago=mp.id_pago;
 
-	IF v_total_vendido IS NULL THEN
-		v_total_vendido:=0;
-	END IF;
-	RETURN ROUND(v_total_vendido *(p_porcentaje/100),2);
-END;
-$$ LANGUAGE plpgsql;
+-- 7. Ventas con Vendedor
+SELECT  v.id_venta,
+		cl.nombre_cliente AS cliente,
+		e.nombre_empleado AS vendedor,
+		v.fecha_venta,
+		f.total_factura AS total_venta
+FROM ventas v
+JOIN clientes cl ON v.id_cliente =cl.id_cliente
+JOIN empleados e ON v.id_vendedor=e.id_empleado
+JOIN facturas f ON f.id_venta=v.id_venta;
 
-SELECT fn_calcular_comision(4);   --Comision al 5% por default
-SELECT fn_calcular_comision(4,8); --Comision al 8%
+-- 8. Detalle de productos vendidos
+SELECT  dv.id_venta,
+		p.nombre_producto AS producto,
+		dv.cantidad_vendida,dv.precio_unitario,dv.subtotal
+FROM detalle_venta dv 	
+JOIN productos p ON dv.id_producto=p.id_producto;
 
---5. Producto Bajo stock
---Lista de productos con stock menor a lo minimo establecido
-CREATE OR REPLACE FUNCTION fn_productos_bajo_stock()
-RETURNS TABLE(id_producto INT, nombre_producto VARCHAR,stock_disponible INT,stock_minimo INT)
-AS $$
-BEGIN
-	RETURN QUERY 
-	SELECT p.id_producto,p.nombre_producto,p.stock_disponible,p.stock_minimo
-	FROM productos p
-	WHERE p.stock_disponible < p.stock_minimo;
-END;
-$$ LANGUAGE plpgsql;
+-- 9. Productos con proveedor 
+SELECT  p.nombre_producto AS producto,
+		c.nombre_categoria AS tipo_producto,
+		pr.nombre_proveedor AS proveedor
+FROM productos p
+JOIN categorias c ON p.id_categoria = c.id_categoria
+JOIN proveedores pr ON p.id_proveedor = pr.id_proveedor;
 
-SELECT *FROM fn_productos_bajo_stock();
+-- 10.Devoluciones con cliente y producto
+SELECT  cl.nombre_cliente AS cliente,
+		p.nombre_producto AS producto,
+		d.fecha_devolucion,d.motivo,
+		d.cantidad_devuelta AS cantidad
+FROM devoluciones d
+JOIN ventas v ON d.id_venta = v.id_venta
+JOIN clientes cl ON v.id_cliente = cl.id_cliente
+JOIN productos p ON d.id_producto =p.id_producto;
 
---6. Clientes Frecuentes
-CREATE OR REPLACE  FUNCTION fn_clientes_frecuentes(p_min_compras INT DEFAULT 3)
-RETURNS TABLE(id_cliente INT,nombre_cliente VARCHAR,cantidad_compras BIGINT,monto_acumulado NUMERIC)
-AS $$
-BEGIN
-	RETURN QUERY
-	SELECT cl.id_cliente,cl.nombre_cliente,
+-- 11.Total vendido por vendedor (GROUP BY)
+SELECT  e.nombre_empleado AS vendedor,
+		COUNT(v.id_venta) AS cantidad_ventas,
+		SUM(f.total_factura) AS total_vendido
+FROM ventas v
+JOIN empleados e ON v.id_vendedor=e.id_empleado
+JOIN facturas f ON f.id_venta = v.id_venta
+GROUP BY e.nombre_empleado
+ORDER BY total_vendido DESC;
+
+-- 12.Productos mas vendidos (GROUP BY)
+SELECT  p.nombre_producto AS producto,
+		SUM(dv.cantidad_vendida) AS total_unidades_vendidas
+FROM detalle_venta dv
+JOIN productos p ON dv.id_producto=p.id_producto
+GROUP BY p.nombre_producto
+ORDER BY total_unidades_vendidas DESC;
+
+-- 13.Ventas por mes (GROUP BY)
+-- MySQL no tiene TO_CHAR, se usa DATE_FORMAT
+SELECT  DATE_FORMAT(v.fecha_venta, '%Y-%m') AS mes,
+		COUNT(v.id_venta) AS total_ventas,
+		SUM(f.total_factura) AS monto_total
+FROM ventas v
+JOIN facturas f ON f.id_venta=v.id_venta
+GROUP BY DATE_FORMAT(v.fecha_venta, '%Y-%m')
+ORDER BY mes;
+
+-- 14. Compras por cliente (GROUP BY)
+SELECT  cl.nombre_cliente AS cliente,
 		COUNT(v.id_venta) AS cantidad_compras,
 		SUM(f.total_factura) AS monto_acumulado
-	FROM ventas v
-	JOIN clientes cl ON v.id_cliente=cl.id_cliente
-	JOIN facturas f ON f.id_venta=v.id_venta
-	GROUP BY cl.id_cliente,cl.nombre_cliente
-	HAVING COUNT(v.id_venta) >= p_min_compras
-	ORDER BY cantidad_compras DESC;
-END;
-$$ LANGUAGE plpgsql;
+FROM ventas v
+JOIN clientes cl ON v.id_cliente=cl.id_cliente
+JOIN facturas f ON f.id_venta=v.id_venta
+GROUP BY cl.nombre_cliente
+ORDER BY monto_acumulado DESC;
 
-SELECT *FROM  fn_clientes_frecuentes();  -- 3 compras o mas
-SELECT *FROM  fn_clientes_frecuentes(5); --5 compras o mas
-	
+-- 15.Devoluciones por vendedor (GROUP BY)
+SELECT  e.nombre_empleado AS vendedor,
+		COUNT(d.id_devoluciones) AS total_devoluciones
+FROM devoluciones d
+JOIN ventas v ON d.id_venta = v.id_venta
+JOIN empleados e ON v.id_vendedor= e.id_empleado
+GROUP BY e.nombre_empleado
+ORDER BY total_devoluciones DESC;
 
-	
+-----------------
+-- SUBCONSULTAS
+-----------------
+-- 16. Clientes con compras superiores al promedio 
+SELECT  cl.nombre_cliente AS cliente,
+		SUM(f.total_factura) AS total_comprado
+FROM ventas v
+JOIN clientes cl ON v.id_cliente = cl.id_cliente
+JOIN facturas f ON f.id_venta=v.id_venta
+GROUP BY cl.nombre_cliente
+HAVING SUM(f.total_factura)> (SELECT AVG(total_factura) FROM facturas);
 
+-- 17.Productos con precio mayor al promedio
+SELECT nombre_producto AS producto, precio_unitario AS precio
+FROM productos
+WHERE precio_unitario > (SELECT AVG(precio_unitario) FROM productos);
+
+-- 18. Vendedores con ventas superiores al promedio
+SELECT nombre_empleado AS vendedor,total_vendido
+FROM (
+		SELECT e.id_empleado,e.nombre_empleado,
+		SUM(f.total_factura) AS total_vendido
+		FROM ventas v
+		JOIN empleados e ON v.id_vendedor=e.id_empleado
+		JOIN facturas f ON f.id_venta=v.id_venta
+		GROUP BY e.id_empleado,e.nombre_empleado
+)AS ventas_por_vendedor
+WHERE total_vendido >(
+	SELECT AVG(total_vendido)
+	FROM(
+		SELECT SUM(f.total_factura) AS total_vendido
+		FROM ventas v
+		JOIN empleados e ON v.id_vendedor=e.id_empleado
+		JOIN facturas f ON f.id_venta=v.id_venta
+		GROUP BY e.id_empleado
+	)AS sub
+);
+
+-- 19. Productos que nunca se han vendido
+SELECT p.id_producto, p.nombre_producto, p.stock_disponible
+FROM productos p
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM detalle_venta dv 
+    WHERE dv.id_producto = p.id_producto
+);
+
+-- 20.Clientes que no han realizado compras
+SELECT c.id_cliente, c.nombre_cliente, c.telefono_cliente
+FROM clientes c
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM ventas v 
+    WHERE v.id_cliente = c.id_cliente
+);
