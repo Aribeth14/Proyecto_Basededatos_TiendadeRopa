@@ -11,6 +11,8 @@ DETERMINISTIC
 BEGIN
     RETURN ROUND(monto * 0.15, 2);
 END //
+
+DELIMITER ;    
 -- Uso: 
 SELECT fn_calcular_iva(100);
 
@@ -23,6 +25,8 @@ DETERMINISTIC
 BEGIN
     RETURN ROUND(monto * (porcentaje / 100), 2);
 END //
+
+DELIMITER ;    
 -- Uso: 
 SELECT fn_calcular_descuento(100, 10);
 
@@ -46,6 +50,8 @@ BEGIN
     RETURN ROUND(monto * (v_porcentaje / 100), 2);
 END //
 
+DELIMITER ;    
+
 -- Uso
 SELECT fn_calcular_descuento_promocion(100, 3);
 
@@ -61,6 +67,8 @@ BEGIN
     END IF;
     RETURN TIMESTAMPDIFF(YEAR, p_fecha_nacimiento, CURDATE());
 END //
+
+DELIMITER ;    
 -- Actualizar o colocar fecha de nacimiento a los 5 primeros clientes para comprobar la funcion
 UPDATE clientes SET fecha_nacimiento = '1995-03-14' WHERE id_cliente = 1;
 UPDATE clientes SET fecha_nacimiento = '1988-11-02' WHERE id_cliente = 2;
@@ -90,6 +98,8 @@ BEGIN
 
     RETURN ROUND(v_total_vendido * (p_porcentaje / 100), 2);
 END //
+
+DELIMITER ;    
 
 -- Uso: 
 SELECT fn_calcular_comision(4, 5);
